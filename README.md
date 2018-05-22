@@ -36,7 +36,7 @@ $ ./gradlew bootRun
 ```
 > (This order will automatically execute the automated tests (building the docs) and executing the server.)
 
-* **Execute the [provided jar](https://github.com/NemesisMate/caravelotrial/releases/download/alpha/caravelotrial-0.0.1-ALPHA.jar)**
+* **Execute the [provided jar](https://github.com/NemesisMate/caravelotrial/releases/)**
 ```
 java -jar <JAR_NAME>.jar
 ```
