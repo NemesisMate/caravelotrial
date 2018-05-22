@@ -1,4 +1,4 @@
-= RESTful Notes API Guide
+= RESTful Reactive POC
 Baeldung;
 :doctype: book
 :icons: font
@@ -12,7 +12,7 @@ Baeldung;
 
 [[overview-the-project]]
 == The Project
-The project consist on a middle-ware async-reactive server **POC (Proof Of Concept)**, that manages the communication between two different actors:
+The project consist on a middleware async-reactive server **POC (Proof Of Concept)**, that manages the communication between two different actors:
 
 * **Requester**: The server "client", it sends request to our server.
 * **Provider**: The third-party provider. We act as their clients, asking them for survey information.
@@ -49,17 +49,17 @@ You can try the project and the request executing the server. To execute it ther
 $ ./gradlew bootRun
 ```
 
-This order will automatically execute the automated tests (building the docs) and executing the server.
+> This order will automatically execute the automated tests (building the docs) and executing the server.
 
-* **Execute the provided jar** (<url>)
+* **Execute the https://github.com/NemesisMate/caravelotrial/releases/download/alpha/caravelotrial-0.0.1-ALPHA.jar[provided jar]**
 ```
-
+java -jar <JAR_NAME>.jar
 ```
 
 
 ==== Access
 
-Now, to manually test the project you can go the the generated documentation under: `localhost:8080/docs/index.html` and execute any of the example
+Now, (once the server is up) to manually test the project you can go the the generated documentation under: `http://localhost:8080/docs/index.html` and execute any of the example
 curl orders for every resource.
 
 

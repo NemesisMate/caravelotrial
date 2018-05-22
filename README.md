@@ -4,7 +4,7 @@ The project consist on a middle-ware async-reactive server **POC (Proof Of Conce
 * **Requester**: The server "client", it sends request to our server.
 * **Provider**: The third-party provider. We act as their clients, asking them for survey information.
 
-.The services we provide to the requester can be separated in two main blocks:
+The services we provide to the requester can be separated in two main blocks:
 
 * **surveys**: The requester can:
   * ask for a survey catalog based on the desired criteria
@@ -36,7 +36,12 @@ $ ./gradlew bootRun
 ```
 > (This order will automatically execute the automated tests (building the docs) and executing the server.)
 
-* **Execute the provided jar** (<url>)
+* **Execute the [provided jar](https://github.com/NemesisMate/caravelotrial/releases/download/alpha/caravelotrial-0.0.1-ALPHA.jar)**
 ```
 java -jar <JAR_NAME>.jar
 ```
+
+#### Access
+
+Now, (once the server is up) to manually test the project you can go the the generated documentation under: `http://localhost:8080/docs/index.html` and execute any of the example
+curl orders for every resource.
