@@ -1,0 +1,203 @@
+= RESTful Notes API Guide
+Baeldung;
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+[[overview]]
+= Overview
+
+[[overview-the-project]]
+== The Project
+The project consist on a middle-ware async-reactive server **POC (Proof Of Concept)**, that manages the communication between two different actors:
+
+* **Requester**: The server "client", it sends request to our server.
+* **Provider**: The third-party provider. We act as their clients, asking them for survey information.
+
+.The services we provide to the requester can be separated in two main blocks:
+
+* **surveys**: The requester can:
+** ask for a survey catalog based on the desired criteria
+** consult a survey knowing it id.
+** get the results of the survey's (Not the scope of the project sample)
+* **subscriptions**: The requester can subscribe a survey-catalog request to have a periodic updated "catalog reception"
+
+== The technologies
+
+The main tech-stack is: **SpringBoot (with Groovy) + Webflux**
+
+Additionally, some tools are being used:
+
+* H2 (for an in-memory db)
+* Guava
+* ModelMapper
+
+
+And finally, for the tests + docs generation: *WebtestClient + Spring RestDocs*.
+
+
+== Try-it yourself
+
+==== Execution
+You can try the project and the request executing the server. To execute it there are several ways:
+
+* **Build-it yourself**: You can build the project with ease, for it you must open a console in the root folder of the project and execute:
+```
+$ ./gradlew bootRun
+```
+
+This order will automatically execute the automated tests (building the docs) and executing the server.
+
+* **Execute the provided jar** (<url>)
+```
+
+```
+
+
+==== Access
+
+Now, to manually test the project you can go the the generated documentation under: `localhost:8080/docs/index.html` and execute any of the example
+curl orders for every resource.
+
+
+[[resources]]
+= Resources
+
+[[resources-index]]
+== Index
+
+The index provides the entry point into the service. As we don't have any index, it will give you a 404.
+
+[[resources-index-access]]
+=== Accessing the index
+
+A `GET` request is used to access the index.
+
+[[resources-surveys]]
+== Surveys REST Service
+
+[[resources-surveys-get]]
+=== Getting a survey catalog (GET)
+
+A `GET` request is used to fetch the available surveys matching the requested conditions. A `POST` request can also be used if adding the `X-HTTP-Method-Override: GET` header.
+
+==== Examples
+
+===== CURL request
+
+include::{snippets}/available-surveys-get-example/curl-request.adoc[]
+
+===== HTTP request
+
+include::{snippets}/available-surveys-get-example/http-request.adoc[]
+
+===== HTTP response
+
+include::{snippets}/available-surveys-get-example/http-response.adoc[]
+
+
+==== Structures
+
+===== Request structure
+
+====== Body
+include::{snippets}/available-surveys-get-example/request-body.adoc[]
+
+====== Fields
+include::{snippets}/available-surveys-get-example/request-fields.adoc[]
+send
+===== Response structure
+
+====== Body
+include::{snippets}/available-surveys-get-example/response-body.adoc[]
+
+====== Fields
+include::{snippets}/available-surveys-get-example/response-fields.adoc[]
+
+
+[[resources-survey-get]]
+=== Fetching a survey (GET)
+
+A `GET` request is used to fetch a survey. For it, the provider id is also needed as the survey's id is provider-relative.
+
+==== Examples
+
+===== CURL request
+
+include::{snippets}/survey-get-example/curl-request.adoc[]
+
+===== HTTP request
+
+include::{snippets}/survey-get-example/http-request.adoc[]
+
+===== HTTP response
+
+include::{snippets}/survey-get-example/http-response.adoc[]
+
+
+==== Structures
+
+===== Response structure
+
+====== Body
+include::{snippets}/survey-get-example/response-body.adoc[]
+
+====== Fields
+include::{snippets}/survey-get-example/response-fields.adoc[]
+
+
+
+
+[[resources-subscription-post]]
+=== Creating a subscription (POST)
+
+A `POST` request is used to create a new subscription. To try the system, a `LOG`-channel with a `MINUTELY` frequency subscription can be created (which will show the catalog in the console every minute).
+
+==== Examples
+
+===== CURL request
+
+include::{snippets}/subscription-post-example/curl-request.adoc[]
+
+===== HTTP request
+
+include::{snippets}/subscription-post-example/http-request.adoc[]
+
+===== HTTP response
+
+include::{snippets}/subscription-post-example/http-response.adoc[]
+
+
+==== Structures
+
+===== Request structure
+
+====== Body
+include::{snippets}/subscription-post-example/request-body.adoc[]
+
+====== Fields
+include::{snippets}/subscription-post-example/request-fields.adoc[]
+send
+===== Response structure
+
+====== Body
+include::{snippets}/subscription-post-example/response-body.adoc[]
+
+====== Fields
+include::{snippets}/subscription-post-example/response-fields.adoc[]
+
+
+
+
+[[resources-subscription-post]]
+=== Fetching a subscription (GET)
+
+ToDo
+
+[[resources-subscription-post]]
+=== Deleting a subscription (DELETE)
+
+ToDo

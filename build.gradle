@@ -1,0 +1,102 @@
+buildscript {
+	ext {
+		springBootVersion = '2.0.2.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+        jcenter()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.asciidoctor:asciidoctor-gradle-plugin:1.5.3")
+	}
+}
+
+
+apply plugin: 'org.asciidoctor.convert'
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'groovy'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.nemesismate'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+ext {
+    snippetsDir = file('build/generated-snippets')
+}
+
+test {
+    outputs.dir snippetsDir
+}
+
+asciidoctor {
+    inputs.dir snippetsDir
+    dependsOn test
+}
+
+task copyRestDocs(type: Copy) {
+    dependsOn asciidoctor
+    from "${asciidoctor.outputDir}/html5"
+    into "${sourceSets.main.output.resourcesDir}/static/docs"
+}
+
+bootRun {
+    dependsOn copyRestDocs
+}
+
+jar {
+    dependsOn asciidoctor
+    from ("${asciidoctor.outputDir}/html5") {
+        into 'static/docs'
+    }
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+    // Dependency to allow the usage of standard annotations (eg: Inject instead of AutoWired)
+    compile('javax.inject:javax.inject:1')
+
+    // SpringBoot
+    compile('org.springframework.boot:spring-boot-starter-webflux')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+
+    // We can't actually use ReactiveCrudRepository because there is no support for sql dbs (which are we using)
+//    compile('org.springframework.boot:spring-boot-starter-data-couchbase')
+
+
+    // Groovy Dependency
+	compile('org.codehaus.groovy:groovy')
+	compile('org.codehaus.groovy:groovy-json') // Maybe we could just rely on jackson here?
+
+    // Model mapping
+    compile('org.modelmapper:modelmapper:1.1.0')
+
+    // Guava
+    compile('com.google.guava:guava:25.0-jre')
+
+    // Data source dependencies
+    runtime('com.h2database:h2')
+
+
+	// -- Docs --
+	// SpringFox - Swagger/OAS doc generation by annotations
+    //	compile "io.springfox:springfox-swagger2:2.9.0"
+
+	// SpringRestDocs
+    asciidoctor('org.springframework.restdocs:spring-restdocs-asciidoctor:2.0.1.RELEASE')
+    testCompile('org.springframework.restdocs:spring-restdocs-webtestclient:2.0.1.RELEASE')
+
+    // Testing dependencies
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+
+    // Patch library. Is removed by default from Java9 so it would give an exception if executed on those JREs
+    compile 'javax.xml.bind:jaxb-api:2.3.0'
+
+}
